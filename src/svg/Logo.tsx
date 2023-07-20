@@ -1,7 +1,9 @@
-import styled, { css } from "styled-components";
-import { modeType, propsType } from "../types";
+import styled, { ThemeContext, css } from "styled-components";
+import { modeType } from "../types";
+import { useContext } from "react";
 
-const Logo: React.FC<propsType> = ({ setActiveTheme, activeTheme }) => {
+const Logo = () => {
+  const { activeTheme, setActiveTheme } = useContext(ThemeContext);
   const toggleTheme = () => {
     setActiveTheme(activeTheme === "dark" ? "light" : "dark");
   };

@@ -4,13 +4,13 @@ import Logo from "../svg/Logo";
 import { modeType } from "../types";
 
 const Header = () => {
-  const { setActiveTheme, activeTheme } = useContext(ThemeContext);
+  const { activeTheme } = useContext(ThemeContext);
 
   return (
     <HeaderParent activeTheme={activeTheme}>
       <Span>Where in the world?</Span>
       <LeftSpan>
-        <Logo setActiveTheme={setActiveTheme} activeTheme={activeTheme} />
+        <Logo />
         Dark Mode
       </LeftSpan>
     </HeaderParent>
@@ -25,10 +25,12 @@ const HeaderParent = styled.header<modeType>(
     height: 0.8rem;
     padding-block: 3rem;
     padding-inline: 1.6rem;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: ${activeTheme === "dark" ? "#2B3844" : "#FFF"};
+
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.06);
     color: ${activeTheme === "dark" ? "#FFF" : "#111517"};
   `,

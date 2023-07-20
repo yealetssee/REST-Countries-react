@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import Header from "./components/Header";
+
 import { ThemeProvider } from "styled-components";
 import { modeType } from "./types";
+import { Header, SearchAndFilter } from "./components";
 
 const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -22,9 +23,12 @@ const App = () => {
   }, []);
   return (
     <ThemeProvider theme={{ activeTheme, setActiveTheme }}>
-      <ParentDiv activeTheme={activeTheme}>
+      <Wrapper activeTheme={activeTheme}>
         <Header />
-      </ParentDiv>
+        <ParentDiv activeTheme={activeTheme}>
+          <SearchAndFilter />
+        </ParentDiv>
+      </Wrapper>
     </ThemeProvider>
   );
 };
@@ -33,12 +37,22 @@ export default App;
 
 const ParentDiv = styled.div<modeType>(
   ({ activeTheme }) => css`
-    width: 37.5rem;
-    height: 100%;
-    background-color: ${activeTheme === "dark" ? "#202C36" : "#FAFAFA"};
+    width: 100%;
+    height: auto;
+
+    padding-inline: 1.6rem;
+    margin-top: 2.4rem;
 
     @media (min-width: 768px) {
       width: 60rem;
     }
+  `,
+);
+
+const Wrapper = styled.div<modeType>(
+  ({ activeTheme }) => css`
+    width: 100%;
+    height: 100%;
+    background-color: ${activeTheme === "dark" ? "#202C36" : "#FAFAFA"};
   `,
 );
