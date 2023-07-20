@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;800&display=swap");
+
+:root {
+  font-size: 62.5%;
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: "Nunito Sans", sans-serif, serif;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
