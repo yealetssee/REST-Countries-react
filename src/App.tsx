@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import useService from "./hooks/useService";
 
 import { ThemeProvider } from "styled-components";
 import { modeType } from "./types";
 import { Header, SearchAndFilter } from "./components";
+import Countries from "./components/Countries";
 
 const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -11,6 +13,8 @@ const App = () => {
   const [activeTheme, setActiveTheme] = useState<string>(
     darkModeQuery.matches ? "dark" : "light",
   );
+  const { searchInput, searchResult, searchEventHandler, handleChange } =
+    useService();
 
   useEffect(() => {
     const handleChange = (event: MediaQueryListEvent) => {
@@ -25,8 +29,13 @@ const App = () => {
     <ThemeProvider theme={{ activeTheme, setActiveTheme }}>
       <Wrapper activeTheme={activeTheme}>
         <Header />
-        <ParentDiv activeTheme={activeTheme}>
-          <SearchAndFilter />
+        <ParentDiv>
+          <SearchAndFilter
+            searchInput={searchInput}
+            searchEventHandler={searchEventHandler}
+            handleChange={handleChange}
+          />
+          <Countries searchResult={searchResult} />
         </ParentDiv>
       </Wrapper>
     </ThemeProvider>
@@ -35,24 +44,23 @@ const App = () => {
 
 export default App;
 
-const ParentDiv = styled.div<modeType>(
-  ({ activeTheme }) => css`
-    width: 100%;
-    height: auto;
+const ParentDiv = styled.div`
+  width: 100%;
+  height: auto;
+  /* background-color: red; */
 
-    padding-inline: 1.6rem;
-    margin-top: 2.4rem;
+  padding-inline: 1.6rem;
+  margin-top: 2.4rem;
 
-    @media (min-width: 768px) {
-      width: 60rem;
-    }
-  `,
-);
-
+  @media (min-width: 768px) {
+    width: 60rem;
+  }
+`;
 const Wrapper = styled.div<modeType>(
   ({ activeTheme }) => css`
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+
     background-color: ${activeTheme === "dark" ? "#202C36" : "#FAFAFA"};
   `,
 );

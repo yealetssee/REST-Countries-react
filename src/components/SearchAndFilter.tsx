@@ -1,24 +1,40 @@
 import { useContext, useState } from "react";
 import styled, { ThemeContext, css } from "styled-components";
-import { modeType } from "../types";
+import { SearchFilterProps, modeType } from "../types";
 import SearchLogo from "../svg/SearchLogo";
 import Arrow from "../svg/Arrow";
 import DropdownMenu from "./DropdownMenu";
+// import useService from "../hooks/useService";
 
-const SearchFilter = () => {
+const SearchFilter: React.FC<SearchFilterProps> = ({
+  searchInput,
+  handleChange,
+  searchEventHandler,
+}) => {
   const { activeTheme } = useContext(ThemeContext);
   const [isShown, setIsShown] = useState<boolean>(false);
+  // const { searchInput, searchEventHandler, handleChange } = useService();
+  const [chosenRegion, setChosenRegion] = useState<
+    "Africa" | "America" | "Asia" | "Europe" | "Oceania"
+  >();
 
   return (
     <Wrapper>
       <Search activeTheme={activeTheme}>
         <SearchLogo />
-        <Input activeTheme={activeTheme} />
+        <Input
+          activeTheme={activeTheme}
+          value={searchInput}
+          onChange={handleChange}
+          onKeyDown={searchEventHandler}
+        />
       </Search>
       <FilterDiv onClick={() => setIsShown(!isShown)} activeTheme={activeTheme}>
-        <Span activeTheme={activeTheme}>Filter by Region</Span>
+        <Span activeTheme={activeTheme}>
+          {chosenRegion !== undefined ? chosenRegion : "Filter by Region"}
+        </Span>
         <Arrow />
-        <DropdownMenu isShown={isShown} />
+        <DropdownMenu setChosenRegion={setChosenRegion} isShown={isShown} />
       </FilterDiv>
     </Wrapper>
   );
@@ -64,7 +80,7 @@ const Input = styled.input<modeType>(
 
 const FilterDiv = styled.div<modeType>(
   ({ activeTheme }) => css`
-    width: 20rem;
+    max-width: 20rem;
     height: 4.8rem;
     border-radius: 0.5rem;
     background-color: ${activeTheme === "dark" ? "#2B3844" : "#FFF"};
@@ -73,7 +89,8 @@ const FilterDiv = styled.div<modeType>(
     padding-inline: 2.4rem 1.9rem;
     display: flex;
     align-items: center;
-    gap: 6.2rem;
+    /* gap: 6.2rem; */
+    justify-content: space-between;
     position: relative;
   `,
 );

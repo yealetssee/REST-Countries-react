@@ -1,17 +1,44 @@
-import { useContext } from "react";
+import { ReactEventHandler, useContext, useState } from "react";
 import styled, { ThemeContext, css } from "styled-components";
-import { dropType, modeType } from "../types";
+import { dropDownProps, dropType, modeType } from "../types";
 
-const DropdownMenu = ({ isShown }: { isShown: boolean }) => {
+const DropdownMenu: React.FC<dropDownProps> = ({
+  isShown,
+  setChosenRegion,
+}) => {
   const { activeTheme } = useContext(ThemeContext);
 
   return (
     <Dropdown activeTheme={activeTheme} isShown={isShown}>
-      <Region activeTheme={activeTheme}>Africa</Region>
-      <Region activeTheme={activeTheme}>America</Region>
-      <Region activeTheme={activeTheme}>Asia</Region>
-      <Region activeTheme={activeTheme}>Europe</Region>
-      <Region activeTheme={activeTheme}>Oceania</Region>
+      <Region
+        onClick={() => {
+          setChosenRegion("Africa");
+        }}
+        activeTheme={activeTheme}
+      >
+        Africa
+      </Region>
+      <Region
+        onClick={() => setChosenRegion("America")}
+        activeTheme={activeTheme}
+      >
+        America
+      </Region>
+      <Region onClick={() => setChosenRegion("Asia")} activeTheme={activeTheme}>
+        Asia
+      </Region>
+      <Region
+        onClick={() => setChosenRegion("Europe")}
+        activeTheme={activeTheme}
+      >
+        Europe
+      </Region>
+      <Region
+        onClick={() => setChosenRegion("Oceania")}
+        activeTheme={activeTheme}
+      >
+        Oceania
+      </Region>
     </Dropdown>
   );
 };
