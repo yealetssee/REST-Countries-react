@@ -1,40 +1,71 @@
-import { ReactEventHandler, useContext, useState } from "react";
+import { ReactEventHandler, useContext } from "react";
 import styled, { ThemeContext, css } from "styled-components";
 import { dropDownProps, dropType, modeType } from "../types";
 
 const DropdownMenu: React.FC<dropDownProps> = ({
   isShown,
   setChosenRegion,
+  searchResult,
+  setSearchResult,
+  setFilteredData,
 }) => {
   const { activeTheme } = useContext(ThemeContext);
+
+  const clickHandler: ReactEventHandler<HTMLParagraphElement> = (e) => {
+    const target = e.target as HTMLParagraphElement;
+    const region = target.textContent as
+      | "Africa"
+      | "Americas"
+      | "Asia"
+      | "Europe"
+      | "Oceania";
+
+    // Update the chosen region
+    setChosenRegion(region);
+
+    const filteredSearchResult = searchResult.filter(
+      (item) => item.region === region,
+    );
+
+    // Update the filtered search result state
+    setFilteredData(filteredSearchResult);
+  };
 
   return (
     <Dropdown activeTheme={activeTheme} isShown={isShown}>
       <Region
-        onClick={() => {
-          setChosenRegion("Africa");
-        }}
+        // onClick={() => {
+        //   setChosenRegion("Africa");
+        // }}
+        onClick={clickHandler}
         activeTheme={activeTheme}
       >
         Africa
       </Region>
       <Region
-        onClick={() => setChosenRegion("America")}
+        // onClick={() => setChosenRegion("America")}
+        onClick={clickHandler}
         activeTheme={activeTheme}
       >
-        America
+        Americas
       </Region>
-      <Region onClick={() => setChosenRegion("Asia")} activeTheme={activeTheme}>
+      <Region
+        // onClick={() => setChosenRegion("Asia")}
+        activeTheme={activeTheme}
+        onClick={clickHandler}
+      >
         Asia
       </Region>
       <Region
-        onClick={() => setChosenRegion("Europe")}
+        // onClick={() => setChosenRegion("Europe")}
+        onClick={clickHandler}
         activeTheme={activeTheme}
       >
         Europe
       </Region>
       <Region
-        onClick={() => setChosenRegion("Oceania")}
+        // onClick={() => setChosenRegion("Oceania")}
+        onClick={clickHandler}
         activeTheme={activeTheme}
       >
         Oceania

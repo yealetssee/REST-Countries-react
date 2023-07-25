@@ -15,17 +15,23 @@ export interface SearchFilterProps {
   searchInput: string;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   searchEventHandler: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  searchResult: CountryData[];
+  setSearchResult: React.Dispatch<React.SetStateAction<CountryData[]>>;
+  setFilteredData: React.Dispatch<React.SetStateAction<CountryData[]>>;
 }
 export interface dropDownProps {
   isShown: boolean;
   setChosenRegion: (
-    chosenRegion: "Africa" | "America" | "Asia" | "Europe" | "Oceania",
+    chosenRegion: "Africa" | "Americas" | "Asia" | "Europe" | "Oceania",
   ) => void;
+  searchResult: CountryData[];
+  setSearchResult: React.Dispatch<React.SetStateAction<CountryData[]>>;
+  setFilteredData: React.Dispatch<React.SetStateAction<CountryData[]>>;
 }
 
 export type region = {
   target: {
-    value: "Africa" | "America" | "Asia" | "Europe" | "Oceania";
+    value: "Africa" | "Americas" | "Asia" | "Europe" | "Oceania";
   };
 };
 

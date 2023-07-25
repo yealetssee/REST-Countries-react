@@ -4,19 +4,34 @@ import { SearchFilterProps, modeType } from "../types";
 import SearchLogo from "../svg/SearchLogo";
 import Arrow from "../svg/Arrow";
 import DropdownMenu from "./DropdownMenu";
+import { SearchAndFilter } from ".";
 // import useService from "../hooks/useService";
 
 const SearchFilter: React.FC<SearchFilterProps> = ({
   searchInput,
   handleChange,
   searchEventHandler,
+  searchResult,
+  setSearchResult,
+  setFilteredData,
 }) => {
   const { activeTheme } = useContext(ThemeContext);
   const [isShown, setIsShown] = useState<boolean>(false);
   // const { searchInput, searchEventHandler, handleChange } = useService();
   const [chosenRegion, setChosenRegion] = useState<
-    "Africa" | "America" | "Asia" | "Europe" | "Oceania"
+    "Africa" | "Americas" | "Asia" | "Europe" | "Oceania"
   >();
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
+    event,
+  ) => {
+    // Your custom action here
+    if (event.key === "Enter") {
+      searchEventHandler(event);
+      setFilteredData([]);
+    }
+
+    // Call the searchEventHandler from your custom hook
+  };
 
   return (
     <Wrapper>
@@ -26,7 +41,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
           activeTheme={activeTheme}
           value={searchInput}
           onChange={handleChange}
-          onKeyDown={searchEventHandler}
+          onKeyDown={handleKeyDown}
         />
       </Search>
       <FilterDiv onClick={() => setIsShown(!isShown)} activeTheme={activeTheme}>
@@ -34,7 +49,13 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
           {chosenRegion !== undefined ? chosenRegion : "Filter by Region"}
         </Span>
         <Arrow />
-        <DropdownMenu setChosenRegion={setChosenRegion} isShown={isShown} />
+        <DropdownMenu
+          setFilteredData={setFilteredData}
+          searchResult={searchResult}
+          setChosenRegion={setChosenRegion}
+          isShown={isShown}
+          setSearchResult={setSearchResult}
+        />
       </FilterDiv>
     </Wrapper>
   );

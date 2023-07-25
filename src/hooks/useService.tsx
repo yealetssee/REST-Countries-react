@@ -5,7 +5,7 @@ import { CountryData } from "../types";
 const useService = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchResult, setSearchResult] = useState<CountryData[]>([]);
-  // console.log(searchResult);
+
   const fetchCountry = async () => {
     try {
       const response = await axios.get(
@@ -52,7 +52,13 @@ const useService = () => {
     setSearchInput(event.target.value);
   };
 
-  return { searchEventHandler, handleChange, searchInput, searchResult };
+  return {
+    searchEventHandler,
+    handleChange,
+    searchInput,
+    searchResult,
+    setSearchResult,
+  };
 };
 
 export default useService;

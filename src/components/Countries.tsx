@@ -2,37 +2,70 @@ import { useContext } from "react";
 import styled, { ThemeContext, css } from "styled-components";
 import { CountryData, modeType } from "../types";
 
-const Countries = ({ searchResult }: { searchResult: CountryData[] }) => {
+const Countries = ({
+  searchResult,
+  filteredData,
+}: {
+  searchResult: CountryData[];
+  filteredData: CountryData[];
+}) => {
   const { activeTheme } = useContext(ThemeContext);
-
-  console.log(searchResult);
 
   return (
     <ParentDiv>
-      {searchResult.slice(0, 8).map((country: CountryData) => (
-        <Country activeTheme={activeTheme} key={country.name.common}>
-          <FlagWrapper>
-            <FlagImg src={country.flags.png} alt={country.flags.alt} />
-          </FlagWrapper>
-          <Info>
-            <CountryName activeTheme={activeTheme}>
-              {country.name.common}
-            </CountryName>
-            <Span activeTheme={activeTheme}>
-              Population:{" "}
-              <Stat activeTheme={activeTheme}>
-                {country.population.toLocaleString()}
-              </Stat>{" "}
-            </Span>
-            <Span activeTheme={activeTheme}>
-              Region: <Stat activeTheme={activeTheme}>{country.region}</Stat>
-            </Span>
-            <Span activeTheme={activeTheme}>
-              Capital: <Stat activeTheme={activeTheme}>{country.capital}</Stat>
-            </Span>
-          </Info>
-        </Country>
-      ))}
+      {filteredData.length > 0
+        ? filteredData.slice(0, 8).map((country: CountryData) => (
+            <Country activeTheme={activeTheme} key={country.name.common}>
+              <FlagWrapper>
+                <FlagImg src={country.flags.png} alt={country.flags.alt} />
+              </FlagWrapper>
+              <Info>
+                <CountryName activeTheme={activeTheme}>
+                  {country.name.common}
+                </CountryName>
+                <Span style={{ marginTop: "1.6rem" }} activeTheme={activeTheme}>
+                  Population:{" "}
+                  <Stat activeTheme={activeTheme}>
+                    {country.population.toLocaleString()}
+                  </Stat>{" "}
+                </Span>
+                <Span activeTheme={activeTheme}>
+                  Region:{" "}
+                  <Stat activeTheme={activeTheme}>{country.region}</Stat>
+                </Span>
+                <Span activeTheme={activeTheme}>
+                  Capital:{" "}
+                  <Stat activeTheme={activeTheme}>{country.capital}</Stat>
+                </Span>
+              </Info>
+            </Country>
+          ))
+        : searchResult.slice(0, 8).map((country: CountryData) => (
+            <Country activeTheme={activeTheme} key={country.name.common}>
+              <FlagWrapper>
+                <FlagImg src={country.flags.png} alt={country.flags.alt} />
+              </FlagWrapper>
+              <Info>
+                <CountryName activeTheme={activeTheme}>
+                  {country.name.common}
+                </CountryName>
+                <Span style={{ marginTop: "1.6rem" }} activeTheme={activeTheme}>
+                  Population:{" "}
+                  <Stat activeTheme={activeTheme}>
+                    {country.population.toLocaleString()}
+                  </Stat>{" "}
+                </Span>
+                <Span activeTheme={activeTheme}>
+                  Region:{" "}
+                  <Stat activeTheme={activeTheme}>{country.region}</Stat>
+                </Span>
+                <Span activeTheme={activeTheme}>
+                  Capital:{" "}
+                  <Stat activeTheme={activeTheme}>{country.capital}</Stat>
+                </Span>
+              </Info>
+            </Country>
+          ))}
     </ParentDiv>
   );
 };
@@ -72,13 +105,11 @@ const FlagImg = styled.img`
 
 const Info = styled.div`
   width: 100%;
-  height: 100%;
+
   padding-top: 2.4rem;
   padding-left: 2.4rem;
   display: flex;
   flex-direction: column;
-
-  /* background-color: red; */
 `;
 
 const CountryName = styled.span<modeType>(
@@ -94,9 +125,7 @@ const Span = styled(CountryName)`
   font-size: 1.4rem;
   font-weight: 600;
   line-height: 1.6rem;
-  &:nth-child(n + 1) {
-    margin-top: rem;
-  }
+  margin-top: 0.5rem;
 `;
 
 const Stat = styled(Span)`
