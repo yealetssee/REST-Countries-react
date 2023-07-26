@@ -6,7 +6,7 @@ const DropdownMenu: React.FC<dropDownProps> = ({
   isShown,
   setChosenRegion,
   searchResult,
-  setSearchResult,
+
   setFilteredData,
 }) => {
   const { activeTheme } = useContext(ThemeContext);
