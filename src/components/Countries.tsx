@@ -1,15 +1,12 @@
 import { useContext } from "react";
 import styled, { ThemeContext, css } from "styled-components";
-import { CountryData, modeType } from "../types";
+import { CountryData, SearchFilterContextType, modeType } from "../types";
+import { ValuesContext } from "./Routes";
 
-const Countries = ({
-  searchResult,
-  filteredData,
-}: {
-  searchResult: CountryData[];
-  filteredData: CountryData[];
-}) => {
+const Countries = () => {
   const { activeTheme } = useContext(ThemeContext);
+  const contextValues = useContext(ValuesContext) as SearchFilterContextType;
+  const { filteredData, searchResult } = contextValues;
 
   return (
     <ParentDiv>

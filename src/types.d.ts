@@ -2,6 +2,16 @@ export type modeType = {
   activeTheme: string;
 };
 
+type ValuesContextType = {
+  searchInput: string;
+  searchResult: CountryData[];
+  searchEventHandler: (event: { key: string }) => void;
+  handleChange: React.ChangeEventHandler<HTMLInputElement>;
+  setSearchResult: React.Dispatch<React.SetStateAction<CountryData[]>>;
+  filteredData: CountryData[];
+  setFilteredData: React.Dispatch<React.SetStateAction<CountryData[]>>;
+};
+
 export type propsType = {
   setActiveTheme: Function;
   activeTheme: string;
@@ -11,14 +21,10 @@ export type dropType = {
   activeTheme: string;
   isShown: boolean;
 };
-export interface SearchFilterProps {
-  searchInput: string;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  searchEventHandler: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+export type SearchFilterContextType = {
+  filteredData: CountryData[];
   searchResult: CountryData[];
-  setSearchResult: React.Dispatch<React.SetStateAction<CountryData[]>>;
-  setFilteredData: React.Dispatch<React.SetStateAction<CountryData[]>>;
-}
+};
 export interface dropDownProps {
   isShown: boolean;
   setChosenRegion: (

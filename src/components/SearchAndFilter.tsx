@@ -1,36 +1,35 @@
 import { useContext, useState } from "react";
 import styled, { ThemeContext, css } from "styled-components";
-import { SearchFilterProps, modeType } from "../types";
+
+import { ValuesContextType, modeType } from "../types";
 import SearchLogo from "../svg/SearchLogo";
 import Arrow from "../svg/Arrow";
 import DropdownMenu from "./DropdownMenu";
-import { SearchAndFilter } from ".";
-// import useService from "../hooks/useService";
+import { ValuesContext } from "./Routes";
 
-const SearchFilter: React.FC<SearchFilterProps> = ({
-  searchInput,
-  handleChange,
-  searchEventHandler,
-  searchResult,
-  setSearchResult,
-  setFilteredData,
-}) => {
+const SearchFilter = () => {
   const { activeTheme } = useContext(ThemeContext);
+  const contextValues = useContext(ValuesContext) as ValuesContextType;
+  const {
+    searchEventHandler,
+    setFilteredData,
+    searchInput,
+    handleChange,
+    searchResult,
+    setSearchResult,
+  } = contextValues;
   const [isShown, setIsShown] = useState<boolean>(false);
-  // const { searchInput, searchEventHandler, handleChange } = useService();
+
   const [chosenRegion, setChosenRegion] = useState<
     "Africa" | "Americas" | "Asia" | "Europe" | "Oceania"
   >();
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
     event,
   ) => {
-    // Your custom action here
     if (event.key === "Enter") {
       searchEventHandler(event);
       setFilteredData([]);
     }
-
-    // Call the searchEventHandler from your custom hook
   };
 
   return (

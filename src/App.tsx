@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import useService from "./hooks/useService";
 
 import { ThemeProvider } from "styled-components";
-import { CountryData, modeType } from "./types";
+import { modeType } from "./types";
 import { Header, SearchAndFilter } from "./components";
 import Countries from "./components/Countries";
 
@@ -13,15 +12,6 @@ const App = () => {
   const [activeTheme, setActiveTheme] = useState<string>(
     darkModeQuery.matches ? "dark" : "light",
   );
-  const {
-    searchInput,
-    searchResult,
-    searchEventHandler,
-    handleChange,
-    setSearchResult,
-  } = useService();
-  const [filteredData, setFilteredData] = useState<CountryData[]>(searchResult);
-  console.log(filteredData.length);
 
   useEffect(() => {
     const handleChange = (event: MediaQueryListEvent) => {
@@ -37,15 +27,8 @@ const App = () => {
       <Wrapper activeTheme={activeTheme}>
         <Header />
         <ParentDiv>
-          <SearchAndFilter
-            setFilteredData={setFilteredData}
-            searchInput={searchInput}
-            searchEventHandler={searchEventHandler}
-            handleChange={handleChange}
-            searchResult={searchResult}
-            setSearchResult={setSearchResult}
-          />
-          <Countries searchResult={searchResult} filteredData={filteredData} />
+          <SearchAndFilter />
+          <Countries />
         </ParentDiv>
       </Wrapper>
     </ThemeProvider>
