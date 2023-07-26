@@ -14,7 +14,11 @@ const CountryPage: React.FC<{ combinedData: CountryData[] }> = ({
   const matchingCountry = combinedData.find((country) => {
     return country.name.common === id;
   });
-  console.log(matchingCountry);
+
+  const zzz = combinedData.find((country) => {
+    return country.name.common === "Grenada";
+  });
+  console.log(zzz);
 
   return (
     <ParentDiv>
@@ -30,76 +34,81 @@ const CountryPage: React.FC<{ combinedData: CountryData[] }> = ({
           <Flag src={matchingCountry?.flags.png} />
         </FlagWrapper>
         <InfoWrapper>
-          <TopInfo>
-            <Span>{matchingCountry?.name.common}</Span>
-            <SubSpan>
-              Native Name:{" "}
-              <InfoSpan>{matchingCountry?.altSpellings[1]}</InfoSpan>
-            </SubSpan>
-            <SubSpan>
-              Population: <InfoSpan>{matchingCountry?.population}</InfoSpan>
-            </SubSpan>
-            <SubSpan>
-              Region: <InfoSpan>{matchingCountry?.region}</InfoSpan>
-            </SubSpan>
-            <SubSpan>
-              Sub Region: <InfoSpan>{matchingCountry?.subregion}</InfoSpan>
-            </SubSpan>
-            <SubSpan>
-              Capital: <InfoSpan>{matchingCountry?.capital}</InfoSpan>
-            </SubSpan>
-          </TopInfo>
-          <BotInfo>
-            <SubSpan>
-              Top Level Domain: <InfoSpan>{matchingCountry?.tld}</InfoSpan>
-            </SubSpan>
-            <SubSpan>
-              Currencies:{" "}
-              <InfoSpan>
-                {" "}
-                {Object.values(matchingCountry?.currencies ?? {}).map(
-                  (currency) => currency.name,
+          <TwoInfos>
+            <TopInfo>
+              <Span>{matchingCountry?.name.common}</Span>
+              <SubSpan>
+                Native Name:{" "}
+                <InfoSpan>{matchingCountry?.altSpellings[1]}</InfoSpan>
+              </SubSpan>
+              <SubSpan>
+                Population: <InfoSpan>{matchingCountry?.population}</InfoSpan>
+              </SubSpan>
+              <SubSpan>
+                Region: <InfoSpan>{matchingCountry?.region}</InfoSpan>
+              </SubSpan>
+              <SubSpan>
+                Sub Region: <InfoSpan>{matchingCountry?.subregion}</InfoSpan>
+              </SubSpan>
+              <SubSpan>
+                Capital: <InfoSpan>{matchingCountry?.capital}</InfoSpan>
+              </SubSpan>
+            </TopInfo>
+            <BotInfo>
+              <SubSpan>
+                Top Level Domain: <InfoSpan>{matchingCountry?.tld}</InfoSpan>
+              </SubSpan>
+              <SubSpan>
+                Currencies:{" "}
+                <InfoSpan>
+                  {" "}
+                  {Object.values(matchingCountry?.currencies ?? {}).map(
+                    (currency) => currency.name,
+                  )}
+                </InfoSpan>
+              </SubSpan>
+              <SubSpan>
+                Languages:{" "}
+                {Object.entries(matchingCountry?.languages ?? {}).reduce(
+                  (acc, [code, lang], index) => (
+                    <>
+                      {acc}
+                      {index !== 0 && ", "}{" "}
+                      <InfoSpan key={code}>{lang}</InfoSpan>
+                    </>
+                  ),
+                  null,
                 )}
-              </InfoSpan>
-            </SubSpan>
-            <SubSpan>
-              Languages:{" "}
-              {Object.entries(matchingCountry?.languages ?? {}).reduce(
-                (acc, [code, lang], index) => (
-                  <>
-                    {acc}
-                    {index !== 0 && ", "} <InfoSpan key={code}>{lang}</InfoSpan>
-                  </>
-                ),
-                null,
-              )}
-            </SubSpan>
-          </BotInfo>
+              </SubSpan>
+            </BotInfo>
+          </TwoInfos>
+
           <BorderCountries>
-            <Span>Border Countries: </Span>
+            <SubSpan>Border Countries: </SubSpan>
             <BorderChildren>
-              {matchingCountry?.borders.map((countryCode) => {
-                const borderCountry = combinedData.find(
-                  (item) => item.cca3 === countryCode,
-                );
-                if (borderCountry) {
-                  return (
-                    <BorderCountryButton
-                      key={borderCountry.name.common}
-                      activeTheme={activeTheme}
-                    >
-                      <Link
-                        style={{ textDecoration: "none", color: "inherit" }}
-                        to={`/countries/${borderCountry.name.common}`}
-                      >
-                        {borderCountry.name.common}
-                      </Link>
-                    </BorderCountryButton>
+              {matchingCountry?.borders &&
+                matchingCountry?.borders.map((countryCode) => {
+                  const borderCountry = combinedData.find(
+                    (item) => item.cca3 === countryCode,
                   );
-                } else {
-                  return null;
-                }
-              })}
+                  if (borderCountry) {
+                    return (
+                      <BorderCountryButton
+                        key={borderCountry.name.common}
+                        activeTheme={activeTheme}
+                      >
+                        <Link
+                          style={{ textDecoration: "none", color: "inherit" }}
+                          to={`/countries/${borderCountry.name.common}`}
+                        >
+                          {borderCountry.name.common}
+                        </Link>
+                      </BorderCountryButton>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
             </BorderChildren>
           </BorderCountries>
         </InfoWrapper>
@@ -130,6 +139,13 @@ const StyledButton = styled.button<modeType>(
     outline: none;
     background-color: ${activeTheme === "dark" ? "#2B3844" : "#FFF"};
     color: ${activeTheme === "dark" ? "#FFF" : "#111517"};
+    @media (min-width: 1440px) {
+      width: 13.6rem;
+      height: 4rem;
+      padding-inline: 3.2rem 3.9rem;
+      text-align: center;
+      border-radius: 0.6rem;
+    }
   `,
 );
 
@@ -139,12 +155,19 @@ const Wrapper = styled.div<modeType>(
     display: flex;
     flex-direction: column;
     gap: 4rem;
+    @media (min-width: 1440px) {
+      flex-direction: row;
+      align-items: center;
+      gap: 14.4rem;
+    }
   `,
 );
 
 const FlagWrapper = styled.div`
   width: 100%;
-  height: 20rem;
+  max-width: 60rem;
+
+  max-height: 48.3rem;
 `;
 const Linkel = styled(Link)`
   text-decoration: none;
@@ -173,16 +196,33 @@ const TopInfo = styled.div`
   flex-direction: column;
 `;
 
+const TwoInfos = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  @media (min-width: 1440px) {
+    flex-direction: row;
+    gap: 11.2rem;
+    align-items: center;
+  }
+`;
+
 const Span = styled.span`
   font-size: 2.2rem;
   font-weight: 800;
   margin-bottom: 1.6rem;
+  @media (min-width: 1440px) {
+    font-size: 3.2rem;
+  }
 `;
 
 const SubSpan = styled.span`
   font-size: 1.4rem;
   font-weight: 600;
   line-height: 3.2rem;
+  @media (min-width: 1440px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const InfoSpan = styled(SubSpan)`
@@ -195,6 +235,10 @@ const BotInfo = styled(TopInfo)``;
 const BorderCountries = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 1.6rem;
+  @media (min-width: 1440px) {
+    flex-direction: row;
+  }
 `;
 
 const BorderChildren = styled.div`

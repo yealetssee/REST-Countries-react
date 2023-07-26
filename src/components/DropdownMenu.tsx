@@ -91,6 +91,9 @@ const Dropdown = styled.div<dropType>(
     height: 14.4rem;
     padding: 1.6rem 2.4rem;
     border-radius: 0.5rem;
+    @media (min-width: 768px) {
+      top: 6rem;
+    }
   `,
 );
 

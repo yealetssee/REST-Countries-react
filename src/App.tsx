@@ -21,8 +21,4 @@ const ParentDiv = styled.div`
 
   padding-inline: 1.6rem;
   margin-top: 2.4rem;
-
-  @media (min-width: 768px) {
-    width: 60rem;
-  }
 `;

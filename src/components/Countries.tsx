@@ -113,6 +113,13 @@ const ParentDiv = styled.div`
   align-items: center;
   margin-top: 3.2rem;
   gap: 4rem;
+  padding-bottom: 4rem;
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7rem;
+  }
 `;
 
 const Country = styled.div<modeType>(

@@ -68,6 +68,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
+  @media (min-width: 768px) {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 const Search = styled.div<modeType>(
@@ -83,6 +88,11 @@ const Search = styled.div<modeType>(
     display: flex;
     align-items: center;
     gap: 2.6rem;
+
+    @media (min-width: 768px) {
+      width: 48rem;
+      height: 5.6rem;
+    }
   `,
 );
 
@@ -91,16 +101,20 @@ const Input = styled.input<modeType>(
     width: 100%;
     background-color: inherit;
     border: none;
+    font-size: 1.2rem;
     outline: none;
     color: ${activeTheme === "dark"
       ? "rgba(255, 255, 255, 1)"
       : "rgba(196, 196, 196, 1)"};
+    @media (min-width: 768px) {
+      font-size: 1.4rem;
+    }
   `,
 );
 
 const FilterDiv = styled.div<modeType>(
   ({ activeTheme }) => css`
-    max-width: 20rem;
+    width: 20rem;
     height: 4.8rem;
     border-radius: 0.5rem;
     background-color: ${activeTheme === "dark" ? "#2B3844" : "#FFF"};
@@ -112,6 +126,10 @@ const FilterDiv = styled.div<modeType>(
     /* gap: 6.2rem; */
     justify-content: space-between;
     position: relative;
+    @media (min-width: 768px) {
+      /* width: 20rem; */
+      height: 5.6rem;
+    }
   `,
 );
 
