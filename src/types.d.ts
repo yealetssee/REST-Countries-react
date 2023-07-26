@@ -2,9 +2,10 @@ export type modeType = {
   activeTheme: string;
 };
 
-type ValuesContextType = {
+export type ValuesContextType = {
   searchInput: string;
   searchResult: CountryData[];
+  combinedData: CountryData[];
   searchEventHandler: (event: { key: string }) => void;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
   setSearchResult: React.Dispatch<React.SetStateAction<CountryData[]>>;
@@ -22,8 +23,7 @@ export type dropType = {
   isShown: boolean;
 };
 export type SearchFilterContextType = {
-  filteredData: CountryData[];
-  searchResult: CountryData[];
+  combinedData: CountryData[];
 };
 export interface dropDownProps {
   isShown: boolean;
@@ -44,7 +44,13 @@ export type region = {
 export interface CountryData {
   name: {
     common: string;
+    nativeName: {
+      mon: {
+        common: string;
+      };
+    };
   };
+  cca3: string;
   topLevelDomain: string[];
   alpha2Code: string;
   alpha3Code: string;
@@ -67,16 +73,13 @@ export interface CountryData {
     alt: string;
   };
   currencies: {
-    code: string;
-    name: string;
-    symbol: string;
-  }[];
+    [currencyCode: string]: {
+      name: string;
+    };
+  };
   languages: {
-    iso639_1: string;
-    iso639_2: string;
-    name: string;
-    nativeName: string;
-  }[];
+    [code: string]: string | Record<string, string>;
+  };
   translations: {
     [key: string]: string;
   };
@@ -87,4 +90,5 @@ export interface CountryData {
   }[];
   cioc: string;
   independent: boolean;
+  tld: string[];
 }

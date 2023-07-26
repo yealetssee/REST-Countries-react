@@ -2,15 +2,49 @@ import { useContext } from "react";
 import styled, { ThemeContext, css } from "styled-components";
 import { CountryData, SearchFilterContextType, modeType } from "../types";
 import { ValuesContext } from "./Routes";
+import { Link } from "react-router-dom";
 
 const Countries = () => {
   const { activeTheme } = useContext(ThemeContext);
   const contextValues = useContext(ValuesContext) as SearchFilterContextType;
-  const { filteredData, searchResult } = contextValues;
+  const { combinedData } = contextValues;
 
   return (
     <ParentDiv>
-      {filteredData.length > 0
+      {
+        combinedData.slice(0, 8).map((country: CountryData) => (
+          <StyledLink
+            key={country.name.common}
+            to={`/countries/${country.name.common}`}
+          >
+            <Country activeTheme={activeTheme}>
+              <FlagWrapper>
+                <FlagImg src={country.flags.png} alt={country.flags.alt} />
+              </FlagWrapper>
+              <Info>
+                <CountryName activeTheme={activeTheme}>
+                  {country.name.common}
+                </CountryName>
+                <Span style={{ marginTop: "1.6rem" }} activeTheme={activeTheme}>
+                  Population:{" "}
+                  <Stat activeTheme={activeTheme}>
+                    {country.population.toLocaleString()}
+                  </Stat>{" "}
+                </Span>
+                <Span activeTheme={activeTheme}>
+                  Region:{" "}
+                  <Stat activeTheme={activeTheme}>{country.region}</Stat>
+                </Span>
+                <Span activeTheme={activeTheme}>
+                  Capital:{" "}
+                  <Stat activeTheme={activeTheme}>{country.capital}</Stat>
+                </Span>
+              </Info>
+            </Country>
+          </StyledLink>
+        ))
+
+        /* {filteredData.length > 0
         ? filteredData.slice(0, 8).map((country: CountryData) => (
             <Country activeTheme={activeTheme} key={country.name.common}>
               <FlagWrapper>
@@ -62,7 +96,8 @@ const Countries = () => {
                 </Span>
               </Info>
             </Country>
-          ))}
+          ))} */
+      }
     </ParentDiv>
   );
 };
@@ -127,4 +162,7 @@ const Span = styled(CountryName)`
 
 const Stat = styled(Span)`
   font-weight: 300;
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
