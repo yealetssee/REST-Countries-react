@@ -78,7 +78,7 @@ export interface CountryData {
     };
   };
   languages: {
-    [code: string]: string | Record<string, string>;
+    [code: string]: string;
   };
   translations: {
     [key: string]: string;

@@ -1,6 +1,8 @@
 import { Link, useParams } from "react-router-dom";
+import React from "react";
+
 import { CountryData, modeType } from "../types";
-import styled, { ThemeContext, ThemeProvider, css } from "styled-components";
+import styled, { ThemeContext, css } from "styled-components";
 import { useContext } from "react";
 import LeftArrow from "../svg/LeftArrow";
 
@@ -42,7 +44,10 @@ const CountryPage: React.FC<{ combinedData: CountryData[] }> = ({
                 <InfoSpan>{matchingCountry?.altSpellings[1]}</InfoSpan>
               </SubSpan>
               <SubSpan>
-                Population: <InfoSpan>{matchingCountry?.population}</InfoSpan>
+                Population:{" "}
+                <InfoSpan>
+                  {matchingCountry?.population.toLocaleString()}
+                </InfoSpan>
               </SubSpan>
               <SubSpan>
                 Region: <InfoSpan>{matchingCountry?.region}</InfoSpan>
@@ -69,15 +74,19 @@ const CountryPage: React.FC<{ combinedData: CountryData[] }> = ({
               </SubSpan>
               <SubSpan>
                 Languages:{" "}
-                {Object.entries(matchingCountry?.languages ?? {}).reduce(
-                  (acc, [code, lang], index) => (
-                    <>
-                      {acc}
-                      {index !== 0 && ", "}{" "}
-                      <InfoSpan key={code}>{lang}</InfoSpan>
-                    </>
-                  ),
-                  null,
+                {Object.values(matchingCountry?.languages ?? {}).reduce(
+                  (acc: JSX.Element[], lang, index) => {
+                    if (index !== 0) {
+                      acc.push(
+                        <React.Fragment key={`comma-${index}`}>
+                          ,{" "}
+                        </React.Fragment>,
+                      );
+                    }
+                    acc.push(<InfoSpan key={index}>{lang}</InfoSpan>);
+                    return acc;
+                  },
+                  [],
                 )}
               </SubSpan>
             </BotInfo>

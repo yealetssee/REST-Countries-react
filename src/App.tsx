@@ -1,4 +1,4 @@
-import styled, { ThemeContext, ThemeProvider, css } from "styled-components";
+import styled from "styled-components";
 
 import { SearchAndFilter } from "./components";
 import Countries from "./components/Countries";
