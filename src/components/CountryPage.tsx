@@ -16,12 +16,7 @@ const CountryPage: React.FC<{ combinedData: CountryData[] }> = ({
   const matchingCountry = combinedData.find((country) => {
     return country.name.common === id;
   });
-
-  const zzz = combinedData.find((country) => {
-    return country.name.common === "Grenada";
-  });
-  console.log(zzz);
-
+  console.log(matchingCountry);
   return (
     <ParentDiv>
       <StyledButton activeTheme={activeTheme}>
